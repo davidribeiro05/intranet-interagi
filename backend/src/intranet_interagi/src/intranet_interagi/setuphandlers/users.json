@@ -1,0 +1,19 @@
+{
+  "portal": [
+    {
+      "email": "david.ribeiro05@hotmail.com",
+      "properties": {
+        "fullname": "Intranet Interagi",
+        "location": "World"
+      },
+      "groups": [
+      ],
+      "roles": [
+        "Member"
+      ],
+      "username": "intranet-interagi"
+    }
+  ],
+    "team": [
+  ]
+}
