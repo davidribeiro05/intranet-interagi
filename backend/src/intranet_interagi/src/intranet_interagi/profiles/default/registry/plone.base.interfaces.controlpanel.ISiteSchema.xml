@@ -4,5 +4,6 @@
            prefix="plone"
   >
     <value key="site_title">Intranet Interagi - Modificado</value>
+    <value key="enable_sitemap">True</value>
   </records>
 </registry>
