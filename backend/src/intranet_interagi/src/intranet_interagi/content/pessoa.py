@@ -6,6 +6,18 @@ from plone.supermodel.model import Schema
 from zope import schema
 from zope.interface import implementer
 
+import re
+
+
+def is_valid_ramal(value: str) -> bool:
+    """Validar se o ramal tem 4 dígitos númericos."""
+    return re.match(r"^\d{4}$", value) if value else True
+
+
+def is_valid_email(value: str) -> bool:
+    """Validar se o email é @plone.org."""
+    return value.endswith("@plone.org") if value else True
+
 
 class IPessoa(Schema):
     """Uma Pessoa."""
@@ -19,8 +31,8 @@ class IPessoa(Schema):
     # Basic info
     title = schema.TextLine(title=_("Nome Completo"), required=True)
     description = schema.Text(title=_("Bio"), required=False)
-    email = Email(title=_("Email"), required=False)
-    ramal = schema.TextLine(title=_("Ramal"), required=False)
+    email = Email(title=_("Email"), required=False, constraint=is_valid_email)
+    ramal = schema.TextLine(title=_("Ramal"), required=False, constraint=is_valid_ramal)
 
 
 @implementer(IPessoa)
