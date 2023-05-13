@@ -98,7 +98,7 @@ class TestArea:
             )
         assert area.excluded_from_nav is True
 
-    def test_subscriber_moddified_without_predio_value(self, portal):
+    def test_subscriber_moddified_is_changing_excluded_from_nav_status(self, portal):
         with api.env.adopt_roles(["Manager"]):
             area = api.content.create(
                 container=portal,
@@ -109,8 +109,10 @@ class TestArea:
                 ramal="2022",
             )
 
-            area.title = "Conteúdo modificado"
-
-            # Area é o objeto que foi modificado
-            notify(ObjectModifiedEvent(area))
         assert area.excluded_from_nav is True
+
+        area.predio = "Sede"
+        # Area é o objeto que foi modificado
+        notify(ObjectModifiedEvent(area))
+
+        assert area.excluded_from_nav is False
