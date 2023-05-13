@@ -84,7 +84,7 @@ class TestArea:
                 predio="sede",
                 ramal="2022",
             )
-        assert area.excluded_from_nav is False
+        assert area.exclude_from_nav is False
 
     def test_subscriber_added_without_predio_value(self, portal):
         with api.env.adopt_roles(["Manager"]):
@@ -96,7 +96,7 @@ class TestArea:
                 email="mktg@plone.org",
                 ramal="2022",
             )
-        assert area.excluded_from_nav is True
+        assert area.exclude_from_nav is True
 
     def test_subscriber_moddified_is_changing_excluded_from_nav_status(self, portal):
         with api.env.adopt_roles(["Manager"]):
@@ -109,10 +109,27 @@ class TestArea:
                 ramal="2022",
             )
 
-        assert area.excluded_from_nav is True
+        assert area.exclude_from_nav is True
 
         area.predio = "Sede"
         # Area é o objeto que foi modificado
         notify(ObjectModifiedEvent(area))
 
-        assert area.excluded_from_nav is False
+        assert area.exclude_from_nav is False
+
+    def test_subscriber_group_creating_new_group_when_is_created_area(self, portal):
+        with api.env.adopt_roles(["Manager"]):
+            area = api.content.create(
+                container=portal,
+                type=CONTENT_TYPE,
+                title="Marketing",
+                description="Área de Marketing",
+                email="mktg@plone.org",
+                ramal="2022",
+            )
+            groupname = '{}_editors'.format(area.UID())
+            roles = api.group.get_roles(
+                groupname=groupname,
+                obj=area
+            )
+        assert "Editor" in roles

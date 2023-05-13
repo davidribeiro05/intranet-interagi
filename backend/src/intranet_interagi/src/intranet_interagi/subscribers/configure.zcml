@@ -10,4 +10,14 @@
            zope.lifecycleevent.IObjectModifiedEvent"
       handler=".area.updated"
       />
+  <subscriber
+      for="intranet_interagi.content.area.IArea
+           zope.lifecycleevent.IObjectAddedEvent"
+      handler=".grupo.added"
+      />
+  <subscriber
+      for="intranet_interagi.content.area.IArea
+           zope.lifecycleevent.IObjectModifiedEvent"
+      handler=".grupo.updated"
+      />
 </configure>
