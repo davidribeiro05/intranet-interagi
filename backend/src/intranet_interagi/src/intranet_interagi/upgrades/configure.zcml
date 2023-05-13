@@ -34,4 +34,18 @@
         />
   </genericsetup:upgradeSteps>
 
+  <genericsetup:upgradeSteps
+      profile="intranet_interagi:default"
+      source="20230512001"
+      destination="20230512002"
+      >
+    <genericsetup:upgradeDepends
+        title="Instala tipo de conteúdo área"
+        import_steps="typeinfo"
+        />
+    <genericsetup:upgradeDepends
+        title="Aplica permissionamento para tipo de conteúdo área"
+        import_steps="rolemap"
+        />
+  </genericsetup:upgradeSteps>
 </configure>

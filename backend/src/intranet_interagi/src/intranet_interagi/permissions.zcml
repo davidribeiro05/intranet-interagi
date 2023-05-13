@@ -9,7 +9,10 @@
         id="intranet_interagi.pessoa.add"
         title="intranet_interagi: Add Pessoa"
         />
-
+    <permission
+        id="intranet_interagi.area.add"
+        title="intranet_interagi: Add Área"
+        />
   </configure>
 
 </configure>
