@@ -2,7 +2,8 @@ from intranet_interagi.content.area import Area
 from plone import api
 from plone.dexterity.fti import DexterityFTI
 from zope.component import createObject
-
+from zope.event import notify
+from zope.lifecycleevent import ObjectModifiedEvent
 import pytest
 
 
@@ -52,12 +53,12 @@ class TestArea:
             content = api.content.create(container=portal, **payload)
         assert content.portal_type == CONTENT_TYPE
         assert isinstance(content, Area)
-    
+
     def test_review_state(self, portal, payload):
         with api.env.adopt_roles(["Manager"]):
             content = api.content.create(container=portal, **payload)
         assert api.content.get_state(content) == "internal"
-    
+
     def test_transition_editor_cannot_publish_internally(self, portal, payload):
         with api.env.adopt_roles(["Editor"]):
             content = api.content.create(container=portal, **payload)
@@ -71,3 +72,45 @@ class TestArea:
         with api.env.adopt_roles(["Reviewer", "Member"]):
             api.content.transition(content, "publish_internally")
         assert api.content.get_state(content) == "internally_published"
+
+    def test_subscriber_added_with_predio_value(self, portal):
+        with api.env.adopt_roles(["Manager"]):
+            area = api.content.create(
+                container=portal,
+                type=CONTENT_TYPE,
+                title="Marketing",
+                description="Área de Marketing",
+                email="mktg@plone.org",
+                predio="sede",
+                ramal="2022",
+            )
+        assert area.excluded_from_nav is False
+
+    def test_subscriber_added_without_predio_value(self, portal):
+        with api.env.adopt_roles(["Manager"]):
+            area = api.content.create(
+                container=portal,
+                type=CONTENT_TYPE,
+                title="Marketing",
+                description="Área de Marketing",
+                email="mktg@plone.org",
+                ramal="2022",
+            )
+        assert area.excluded_from_nav is True
+
+    def test_subscriber_moddified_without_predio_value(self, portal):
+        with api.env.adopt_roles(["Manager"]):
+            area = api.content.create(
+                container=portal,
+                type=CONTENT_TYPE,
+                title="Marketing",
+                description="Área de Marketing",
+                email="mktg@plone.org",
+                ramal="2022",
+            )
+
+            area.title = "Conteúdo modificado"
+
+            # Area é o objeto que foi modificado
+            notify(ObjectModifiedEvent(area))
+        assert area.excluded_from_nav is True
