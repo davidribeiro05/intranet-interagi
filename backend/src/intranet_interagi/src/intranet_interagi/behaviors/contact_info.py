@@ -26,3 +26,7 @@ class IContactInfo(model.Schema):
         required=False,
         constraint=is_valid_extension,
     )
+
+    predio = schema.Choice(
+        title=_("Prédio"), required=False, vocabulary="intranet_interagi.predios"
+    )
