@@ -117,19 +117,14 @@ class TestArea:
 
         assert area.exclude_from_nav is False
 
-    def test_subscriber_group_creating_new_group_when_is_created_area(self, portal):
+    def test_subscriber_group_creating_new_group_when_is_created_area(self, portal, payload):
+        from Products.PlonePAS.tools.groupdata import GroupData
+
         with api.env.adopt_roles(["Manager"]):
-            area = api.content.create(
-                container=portal,
-                type=CONTENT_TYPE,
-                title="Marketing",
-                description="Área de Marketing",
-                email="mktg@plone.org",
-                ramal="2022",
-            )
-            groupname = '{}_editors'.format(area.UID())
-            roles = api.group.get_roles(
-                groupname=groupname,
-                obj=area
-            )
+            area = api.content.create(container=portal, ** payload)
+        area_uuid = api.content.get_uuid(area)
+        group_name = f"{area_uuid}_editors"
+        group = api.group.get(groupname=group_name)
+        assert isinstance(group, GroupData)
+        roles = api.group.get_roles(group=group, obj=area)
         assert "Editor" in roles

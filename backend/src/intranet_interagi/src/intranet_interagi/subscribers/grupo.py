@@ -5,23 +5,19 @@ from zope.lifecycleevent import ObjectAddedEvent
 
 
 def _create_group(obj: Area):
-    """Create group after create Área."""
-    title = "{}_editors".format(obj.title)
-    groupname = "{}_editors".format(obj.UID())
-
-    group = api.group.create(
-        groupname=groupname,
-        title=title,
-        description="Just a description",
-        roles=[
-            "Editor",
-        ],
-        groups=[
-            "Editors",
-        ],
+    """Create user groups for the new Area."""
+    uid = api.content.get_uuid(obj)
+    title = obj.title
+    payload = {
+        "groupname": f"{uid}_editors",
+        "title": f"Editores para {title}",
+        "description": f"Students for the {title} session",
+    }
+    editors = api.group.create(**payload)
+    api.group.grant_roles(group=editors, roles=["Editor"], obj=obj)
+    logger.info(
+        f"Granted role of Editor to {uid}_editors group on {obj.absolute_url()}"
     )
-
-    logger.info(f"Novo grupo criado para {title} - {groupname}")
 
 
 def added(obj: Area, event: ObjectAddedEvent):
