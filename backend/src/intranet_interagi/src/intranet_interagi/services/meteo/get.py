@@ -1,6 +1,7 @@
+from intranet_interagi.services.meteo import openmeteo
 from plone import api
 from plone.restapi.services import Service
-from intranet_interagi.services.meteo import openmeteo
+
 
 class MeteoGet(Service):
     @property
