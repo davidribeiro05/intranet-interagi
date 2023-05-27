@@ -108,4 +108,3 @@ PessoaView.propTypes = {
 };
 
 export default PessoaView;
- 
