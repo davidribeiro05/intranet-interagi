@@ -58,4 +58,19 @@
         import_steps="typeinfo"
         />
   </genericsetup:upgradeSteps>
+
+  <genericsetup:upgradeSteps
+      profile="intranet_interagi:default"
+      source="20230513001"
+      destination="20230522001"
+      >
+    <genericsetup:upgradeDepends
+        title="Adiciona o indice de area"
+        import_steps="catalog"
+        />
+    <upgradeStep
+        title="Reindexa o tipo pessoa"
+        handler=".catalog.reindexa_pessoa"
+        />
+  </genericsetup:upgradeSteps>
 </configure>
