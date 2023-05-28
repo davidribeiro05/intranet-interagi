@@ -4,8 +4,8 @@
          name="area"
   >
     <indexed_attr value="area" />
+    <indexed_attr value="predio" />
   </index>
-  <!-- Metadata
+</object><!-- Metadata
   <column value="industry" />
 -->
-</object>
