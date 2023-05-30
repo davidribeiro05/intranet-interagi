@@ -1,3 +1,8 @@
+body.contenttype-plone-site #main .breadcrumbs,
+body.contenttype-lrf #main .breadcrumbs {
+  display: initial;
+}
+
 :root {
   --narrow-container-width: 1100px;
   --default-container-width: 1100px;

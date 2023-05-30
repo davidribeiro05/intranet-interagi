@@ -1,0 +1,4 @@
+body.contenttype-plone-site #main .breadcrumbs,
+body.contenttype-lrf #main .breadcrumbs {
+  display: initial;
+}
