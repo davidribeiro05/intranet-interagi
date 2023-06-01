@@ -49,6 +49,7 @@ setup(
         "Plone",
         "prettyconf",
         "plone.api",
+        "collective.bookmarks",
     ],
     extras_require={
         "test": [
