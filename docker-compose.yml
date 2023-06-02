@@ -39,7 +39,7 @@ services:
       - --api
 
   frontend:
-    image: ghcr.io/ericof/intranet-interagi-frontend:latest
+    image: ghcr.io/davidribeiro05/intranet-interagi-frontend:latest
     platform: linux/amd64
     deploy:
       replicas: 2
@@ -59,7 +59,7 @@ services:
       - backend
 
   backend:
-    image: ghcr.io/ericof/intranet-interagi-backend:latest
+    image: ghcr.io/davidribeiro05/intranet-interagi-backend:latest
     platform: linux/amd64
     deploy:
       replicas: 2
