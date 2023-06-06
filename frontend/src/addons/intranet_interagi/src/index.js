@@ -1,9 +1,18 @@
+// Blocos
+import MeteoEdit from './components/Blocks/Meteo/Edit';
+import MeteoView from './components/Blocks/Meteo/View';
 import RespostaView from './components/Blocks/Resposta/View';
+
+// Views
 import AreaView from './components/View/AreaView';
 import PessoaView from './components/View/PessoaView';
 
 // Icones
 import exclamationSVG from '@plone/volto/icons/exclamation.svg';
+import meteoSVG from '@plone/volto/icons/cloud.svg';
+
+// reducers
+import { meteoData } from './reducers/meteoData';
 
 const applyConfig = (config) => {
   config.settings = {
@@ -19,6 +28,7 @@ const applyConfig = (config) => {
     Pessoa: PessoaView,
   };
 
+  // Blocos
   config.blocks.blocksConfig.respostaBlock = {
     id: 'respostaBlock',
     title: 'Resposta',
@@ -31,10 +41,29 @@ const applyConfig = (config) => {
     blockHasOwnFocusManagement: false,
   };
 
+  config.blocks.blocksConfig.meteoBlock = {
+    id: 'meteoBlock',
+    title: 'Clima',
+    group: 'intranet',
+    icon: meteoSVG,
+    view: MeteoView,
+    edit: MeteoEdit,
+    restricted: false,
+    mostUsed: false,
+    sidebarTab: true,
+    blockHasOwnFocusManagement: false,
+  };
+  // Grupo de Blocos
   config.blocks.groupBlocksOrder = [
     ...config.blocks.groupBlocksOrder,
     { id: 'intranet', title: 'Intranet' },
   ];
+
+  // Reducers
+  config.addonReducers = {
+    ...config.addonReducers,
+    meteoData,
+  };
 
   return config;
 };

@@ -1,0 +1,22 @@
+.block.blockResposta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .container {
+    max-width: 6em;
+    min-height: 2em;
+    padding: 10px;
+    border: 1px solid $darkBlue;
+    background-color: $darkBlue;
+    border-radius: 10px;
+    color: $marfim;
+    text-align: center;
+
+    .value {
+      @include block-title();
+      padding: 30px;
+      margin: 0px;
+    }
+  }
+}
